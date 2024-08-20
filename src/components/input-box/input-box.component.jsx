@@ -29,26 +29,6 @@ const InputBox = () => {
     { code: "vi", name: "Vietnamese" },
   ];
 
-  useEffect(() => {
-    if (translateTimeoutRef.current) {
-      clearTimeout(translateTimeoutRef.current);
-    }
-
-    if (inputText) {
-      translateTimeoutRef.current = setTimeout(() => {
-        handleTranslate();
-      }, 500);
-    } else {
-      setOutputText("");
-    }
-
-    return () => {
-      if (translateTimeoutRef.current) {
-        clearTimeout(translateTimeoutRef.current);
-      }
-    };
-  }, [inputText, inputLang, outputLang]);
-
   const handleTranslate = async () => {
     setIsLoading(true);
     try {
@@ -71,6 +51,28 @@ const InputBox = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (translateTimeoutRef.current) {
+      clearTimeout(translateTimeoutRef.current);
+    }
+
+    if (inputText) {
+      translateTimeoutRef.current = setTimeout(() => {
+        handleTranslate();
+      }, 500);
+    } else {
+      setOutputText("");
+    }
+
+    return () => {
+      if (translateTimeoutRef.current) {
+        clearTimeout(translateTimeoutRef.current);
+      }
+    };
+  }, [inputText, inputLang, outputLang]);
+
+  
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(outputText).then(() => {
